@@ -5,6 +5,15 @@ import ShopScreen from "./screens/ShopScreen";
 import ShoppingNavigator from "./navigation/ShoppingNavigator";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
+import { createStore, combineReducers } from "redux";
+import { Provider } from "react-redux";
+import shoppingReducer from "./store/reducers/shopping";
+
+const rootReducer = combineReducers({
+  shopping: shoppingReducer,
+});
+
+const store = createStore(rootReducer);
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -25,7 +34,11 @@ export default function App() {
       />
     );
   }
-  return <ShoppingNavigator />;
+  return (
+    <Provider store={store}>
+      <ShoppingNavigator />
+    </Provider>
+  );
 }
 
 // const styles = StyleSheet.create({
